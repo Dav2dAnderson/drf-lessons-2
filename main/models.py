@@ -33,6 +33,7 @@ class Application(models.Model):
     owner = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     service = models.ForeignKey(Service, on_delete=models.CASCADE)
     title = models.CharField(max_length=255)
+    slug = models.SlugField(null=True, blank=True)
     description = models.TextField()
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
@@ -40,6 +41,11 @@ class Application(models.Model):
 
     def __str__(self):
         return self.owner.username
+    
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.title)
+        return super().save(*args, **kwargs)
 
     class Meta:
         verbose_name = 'Application'

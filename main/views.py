@@ -25,12 +25,12 @@ class ApplicationViewSet(viewsets.ModelViewSet):
 
     filter_backends = [filters.SearchFilter]
     search_fields = ['title', 'status']
-
-    def get_queryset(self):
-        return Application.objects.filter(owner=self.request.user)
-    
+   
     def get_serializer_class(self, *args, **kwargs):
         if self.action == 'list':
             return ApplicationsSerializer
         return ApplicationDetailSerializer
+    
+    def get_queryset(self):
+        return Application.objects.filter(owner=self.request.user)
 

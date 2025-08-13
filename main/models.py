@@ -66,3 +66,17 @@ class Notifications(models.Model):
     class Meta:
         verbose_name = 'Notification'
         verbose_name_plural = "Notifications"
+
+
+# Tanlanganlar
+class Favourites(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    service = models.ForeignKey(Service, on_delete=models.CASCADE)
+    added_date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.service.title
+    
+    class Meta:
+        verbose_name = 'Favourite'
+        verbose_name_plural = 'Favourites'
